@@ -1,11 +1,11 @@
-
-
 from django.shortcuts import render
 from django.contrib import messages
+from .models import Trainer
 
 def home_view(request):
-    return render(request, "index.html" )
-
+    trainers = Trainer.objects.all()
+    context = {"trainers":trainers}
+    return render(request, "index.html" ,context=context)
 
 def trainer_view(request):
     return render(request, "trainer.html")
