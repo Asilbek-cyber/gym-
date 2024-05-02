@@ -1,5 +1,6 @@
-from django.shortcuts import render
-from django.contrib import messages
+from django.shortcuts import render,HttpResponseRedirect
+from django.contrib import messages  # new
+from django.urls import reverse  # new
 from .models import Trainer,Contact
 from .forms import ContactForm #new
 from .bot import send_message
@@ -26,7 +27,11 @@ def contact_view(request):
 
             send_message(name,email,phone_number,description)
             form.save()
-            form = ContactForm() 
+            form = ContactForm()
+            messages.success(request, '🥳 Murojatingiz adminga yuborildi...') 
+            return HttpResponseRedirect(reverse('home-page'))
+        else:
+            messages.error(request, 'Formani qaytadan to\'ldiring')
              
     context = {"form":form}
 
